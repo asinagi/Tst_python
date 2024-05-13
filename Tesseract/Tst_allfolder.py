@@ -35,19 +35,22 @@ def Ocr(address):
             keyword_found = False
             for keyword in P_keywords:
                 if keyword in result:
-                    a = P_keywords.index(keyword)
-                    for keyword2 in R_keywords:
-                        if keyword2 in result:
-                            b = R_keywords.index(keyword2)
-                            score += score_seat[a][b]
-                            keyword_found = True
-                            break  # 더 이상 검색하지 않음
-                    if keyword == 'primary' and not keyword_found:
+                    if keyword == 'primary':
                         # 'Primary'가 발견되었지만 'Two Handed'가 발견되지 않았을 때
                         if 'Two Handed' in result:
-                            score += score_seat[P_keywords.index('Two Handed')][R_keywords.index(keyword2)]
-                    break  # 더 이상 검색하지 않음
-            
+                            score += score_seat[P_keywords.index('Two Handed')][R_keywords.index('Common')]
+                            keyword_found = True
+                            break  # 더 이상 검색하지 않음
+                    else:
+                        a = P_keywords.index(keyword)
+                        for keyword2 in R_keywords:
+                            if keyword2 in result:
+                                b = R_keywords.index(keyword2)
+                                score += score_seat[a][b]
+                                keyword_found = True
+                                break  # 더 이상 검색하지 않음
+                        if keyword_found:
+                            break  # 더 이상 검색하지 않음
             total_score += score
 
     print("Total score:", total_score)

@@ -7,14 +7,19 @@ def Ocr(address):
 
     folder_path = address
 
-    P_keywords = ['Two Handed','primary','secondary', 'Head', 'Hand','Foot','Chest', 'Legs','Back','Accessories','Utilities']
+    P_keywords = ['Two Handed','primary','secondary', 'Head', 'Hand','Foot','Chest', 'Legs','Back','Ring','Necklace','Utilities']
     R_keywords = ['Junk', 'Poor', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Unique']
     score_seat = [
         [15,22,30,45,60,90,120,175],
         [9,13,18,27,36,54,72,125],
         [7,10,14,21,28,42,56,100],
         [4,6,8,12,16,24,32,40],
+        [4,6,8,12,16,24,32,40],
+        [4,6,8,12,16,24,32,40],
         [5,7,10,15,20,30,40,50],
+        [5,7,10,15,20,30,40,50],
+        [5,7,10,15,20,30,40,50],
+        [0,0,0,9,12,18,24,30],
         [0,0,0,9,12,18,24,30],
         [2,3,4,6,8,12,16,20]
     ]
@@ -26,9 +31,6 @@ def Ocr(address):
         if os.path.isfile(file_path) and filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             img = Image.open(file_path)
             result = pytesseract.image_to_string(img, lang='eng')
-            
-            result = result.replace("hand", "head").replace("foot", "head")
-            result = result.replace("Back", "chest").replace("Legs", "chest")
             
             # 키워드가 있는지 확인하여 스코어 계산
             score = 0
